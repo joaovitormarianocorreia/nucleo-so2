@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "TICTAC.C": "cpp",
+        "SYSTEM.C": "cpp",
+        "NUCLEO.C": "cpp"
+    }
+}
