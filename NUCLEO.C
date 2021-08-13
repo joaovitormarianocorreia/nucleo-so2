@@ -86,16 +86,16 @@ void far cria_processo (char nome_p[], void far (*end_proc)()) {
         if((p_aux = (PTR_DESC_PROC)malloc(sizeof(DESCRITOR_PROC))) == NULL) {
                 exit(1);
         }
- 
+
         strcpy(p_aux->nome, nome_p);
         p_aux->estado = ativo;
-        p_aux->contexto = cria_des; // Inicializa o descritor de co-rotina
+        p_aux->contexto = cria_desc();
         newprocess(end_proc, p_aux->contexto);
 
         if(prim == NULL) {
                 prim = p_aux;
                 prim->prox = NULL;
-        } 
+        }
         else if(prim->prox == NULL) {
                 prim->prox = p_aux;
                 p_aux->prox = prim;
@@ -115,7 +115,7 @@ PTR_DESC_PROC far procura_prox_ativo() {
         PTR_DESC_PROC tmp;
         tmp = prim->prox;
         while(tmp->prox != prim) {
-                if(trmp->estado == ativo) {
+                if(tmp->estado == ativo) {
                         return tmp;
                 }
                 else {
@@ -136,7 +136,7 @@ void far escalador() {
         while(1) {
                 iotransfer();
                 disable();
-                if () {
+                if (!*a.y) {
                         if((prim = procura_prox_ativo()) == NULL) {
                                 volta_dos();
                         }
