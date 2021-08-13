@@ -1,2 +1,2 @@
 void far tic();
-void far tac();
+void far tac();
