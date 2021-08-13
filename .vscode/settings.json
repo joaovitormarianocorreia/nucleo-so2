@@ -2,6 +2,7 @@
     "files.associations": {
         "TICTAC.C": "cpp",
         "SYSTEM.C": "cpp",
-        "NUCLEO.C": "cpp"
+        "NUCLEO.C": "cpp",
+        "ESCALA.C": "cpp"
     }
 }

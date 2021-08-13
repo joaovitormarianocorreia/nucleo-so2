@@ -1,22 +1,45 @@
 #include <system.h>
-#include <stdio.h>
-#include <string.h>
 
-typedef struct desc_proc {
+typedef struct registros {
+        unsigned bx1, es1;
+} regis;
+
+typedef union k {
+        regis x;
+        char far *y;
+} APONTA_REG_CRIT;
+
+
+typedef struct desc_p {
         char nome[35];
-        enum {ativo, terminado} estado;
+        enum {ativo, bloq_p,terminado} estado;
         PTR_DESC contexto;
-        struct desc_proc *prox;
+        struct desc_p *fila_sem;
+        struct desc_p *prox;
 } DESCRITOR_PROC;
 
 typedef DESCRITOR_PROC *PTR_DESC_PROC;
 
-extern void far cria_processo(char nome_p[], void far (*end_prc)());
+typedef struct {
+        int s;
+        PTR_DESC_PROC Q;
+} semaforo;
 
-extern PTR_DESC_PROC far procura_prox_ativo();
+void far inicia_semaforo(semaforo *sem, int n);
 
-extern void far escalador();
+void far p(semaforo *sem);
 
-extern void far dispara_sistema();
+void far v(semaforo *sem);
 
-extern void far termina_processo();
+void far cria_processo(char nome_p[], void far (*end_prc)());
+
+PTR_DESC_PROC far procura_prox_ativo();
+
+void far escalador();
+
+void far dispara_sistema();
+
+void far volta_dos();
+
+void far termina_processo();
+

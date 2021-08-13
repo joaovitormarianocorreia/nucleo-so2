@@ -1,4 +1,3 @@
-#include<system.h>
 #include<stdio.h>
 #include<nucleo.h>
 
@@ -33,13 +32,6 @@ APONTA_REG_CRIT a;
 PTR_DESC_PROC prim = NULL;
 PTR_DESC d_esc;
 
-
-// Dar uma olhada melhor depois se nao da para fazer melhor
-PTR_DESC_PROC far procura_prox_ativo();
-void far volta_dos();
-
-
-// Funcoes semaforo
 void far inicia_semaforo(semaforo *sem, int n) {
         sem->s = n;
         sem->Q = NULL;
