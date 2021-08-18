@@ -1,5 +1,9 @@
-#include<stdio.h>
-#include<nucleo.h>
+#include <stdio.h>
+#include <dos.h> far
+#include <setjmp.h>
+#include <alloc.h>
+#include <stdlib.h>
+#include <system.h>
 
 typedef struct registros {
         unsigned bx1, es1;
@@ -36,6 +40,28 @@ void far inicia_semaforo(semaforo *sem, int n) {
         sem->s = n;
         sem->Q = NULL;
 }
+
+PTR_DESC_PROC far procura_prox_ativo() {
+        PTR_DESC_PROC tmp;
+        tmp = prim->prox;
+        while(tmp->prox != prim) {
+                if(tmp->estado == ativo) {
+                        return tmp;
+                }
+                else {
+                        tmp = tmp->prox;
+                }
+        }
+        return NULL;
+}
+
+void far volta_dos() {
+        disable();
+        setvect(8, p_est->int_anterior);
+        enable();
+        exit(0);
+}
+
 
 void far p(semaforo *sem) {
         PTR_DESC_PROC aux;
@@ -111,19 +137,7 @@ void far cria_processo (char nome_p[], void far (*end_proc)()) {
 }
 
 
-PTR_DESC_PROC far procura_prox_ativo() {
-        PTR_DESC_PROC tmp;
-        tmp = prim->prox;
-        while(tmp->prox != prim) {
-                if(tmp->estado == ativo) {
-                        return tmp;
-                }
-                else {
-                        tmp = tmp->prox;
-                }
-        }
-        return NULL;
-}
+
 
 
 void far escalador() {
@@ -154,12 +168,7 @@ void far dispara_sistema() {
         transfer(d_dispara, d_esc);
 }
 
-void far volta_dos() {
-        disable();
-        setvect(8, p_est->inst_anterior);
-        enable();
-        exit(0);
-}
+
 
 void far termina_processo() {
         disable();

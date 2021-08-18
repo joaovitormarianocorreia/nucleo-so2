@@ -3,6 +3,8 @@
         "TICTAC.C": "cpp",
         "SYSTEM.C": "cpp",
         "NUCLEO.C": "cpp",
-        "ESCALA.C": "cpp"
+        "ESCALA.C": "cpp",
+        "EXEMPLO_NUCLEO.C": "cpp",
+        "EXEMPLO1.C": "cpp"
     }
 }

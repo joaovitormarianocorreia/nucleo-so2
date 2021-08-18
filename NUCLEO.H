@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <dos.h> far
+#include <setjmp.h>
+#include <alloc.h>
+#include <stdlib.h>
 #include <system.h>
 
 typedef struct registros {
@@ -25,21 +30,21 @@ typedef struct {
         PTR_DESC_PROC Q;
 } semaforo;
 
-void far inicia_semaforo(semaforo *sem, int n);
+extern void far inicia_semaforo(semaforo *sem, int n);
 
-void far p(semaforo *sem);
+extern void far p(semaforo *sem);
 
-void far v(semaforo *sem);
+extern void far v(semaforo *sem);
 
-void far cria_processo(char nome_p[], void far (*end_prc)());
+extern void far cria_processo(char nome_p[], void far (*end_prc)());
 
-PTR_DESC_PROC far procura_prox_ativo();
+extern PTR_DESC_PROC far procura_prox_ativo();
 
-void far escalador();
+extern void far escalador();
 
-void far dispara_sistema();
+extern void far dispara_sistema();
 
-void far volta_dos();
+extern void far volta_dos();
 
-void far termina_processo();
+extern void far termina_processo();
 
