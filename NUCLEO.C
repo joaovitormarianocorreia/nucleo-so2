@@ -133,23 +133,24 @@ void far cria_processo (char nome_p[], void far (*end_proc)()) {
 
 
 
-void far escalador() {
-        p_est->p_origem = d_esc;
-        p_est->p_destino = prim->contexto;
+void far escalador () {
+        p_est-> p_origem = d_esc;
+        p_est->p_destino = prim -> contexto;
         p_est->num_vetor = 8;
         _AH = 0x34;
         _AL = 0x00;
         geninterrupt(0x21);
-        while(1) {
+        a.x.bx1 = _BX;
+        a.x.es1 = _ES;
+        while (1) {
                 iotransfer();
                 disable();
- 
-                        if((prim = procura_prox_ativo()) == NULL) {
-                                volta_dos();
-                        }
-                        p_est->p_destino = prim->contexto;
-
-                enable();
+                if (!*a.y) {
+                        prim->contexto = p_est->p_destino ;
+                        prim = procura_prox_ativo() ;
+                        p_est->p_destino = prim->contexto ;
+                }
+                enable () ;
         }
 }
 
