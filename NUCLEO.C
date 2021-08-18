@@ -3,6 +3,7 @@
 #include <setjmp.h>
 #include <alloc.h>
 #include <stdlib.h>
+#include <string.h>
 #include <system.h>
 
 typedef struct registros {
@@ -108,7 +109,7 @@ void far v(semaforo *sem) {
 
 
 void far cria_processo (char nome_p[], void far (*end_proc)()) {
-        PTR_DESC_PROC p_aux, tmp;
+        PTR_DESC_PROC p_aux;
         if((p_aux = (PTR_DESC_PROC)malloc(sizeof(DESCRITOR_PROC))) == NULL) {
                 exit(1);
         }
@@ -119,21 +120,13 @@ void far cria_processo (char nome_p[], void far (*end_proc)()) {
         newprocess(end_proc, p_aux->contexto);
 
         if(prim == NULL) {
-                prim = p_aux;
-                prim->prox = NULL;
-        }
-        else if(prim->prox == NULL) {
-                prim->prox = p_aux;
-                p_aux->prox = prim;
+                prim = p_aux; 
         }
         else {
-                tmp = prim;
-                while (tmp->prox != prim) {
-                        tmp = tmp->prox;
-                }
-                p_aux->prox = prim;
-                tmp->prox = p_aux;
+                p_aux->prox = prim->prox;
         }
+        prim->prox = p_aux;
+        
 }
 
 
@@ -150,12 +143,12 @@ void far escalador() {
         while(1) {
                 iotransfer();
                 disable();
-                if (!*a.y) {
+ 
                         if((prim = procura_prox_ativo()) == NULL) {
                                 volta_dos();
                         }
                         p_est->p_destino = prim->contexto;
-                }
+
                 enable();
         }
 }
