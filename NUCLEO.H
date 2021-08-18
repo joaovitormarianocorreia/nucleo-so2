@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <dos.h> far
 #include <setjmp.h>
-#include <alloc.h>
 #include <stdlib.h>
 #include <system.h>
 
