@@ -126,7 +126,6 @@ void far cria_processo (char nome_p[], void far (*end_proc)()) {
                 p_aux->prox = prim->prox;
         }
         prim->prox = p_aux;
-        
 }
 
 
